@@ -2,21 +2,75 @@
   <div id="app">
     <header>
       <h1><strong>DOTA2</strong>Database</h1>
+      <form class="search-box">
+        <input
+          type="search"
+          class="search-field"
+          placeholder="Search Dota2 Info"
+          required
+        />
+      </form>
     </header>
-    <form class="search-box">
-      <input
-        type="search"
-        class="search-field"
-        placeholder="Search Dota2 Info"
-        required
-      />
-    </form>
+
+    <main>
+      <h1 v-for="item in heroList" v-bind:key="item.id">{{ item.name }}</h1>
+      <div class="cards">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
+    </main>
   </div>
 </template>
 
+// --------------------------------------
 <script>
-export default {};
+import Card from "./components/Card";
+import ref from "vue";
+
+export default {
+  setup() {
+    const heroList = ref(null);
+
+    const error = ref(null);
+
+    return {
+      heroList,
+      error,
+    };
+  },
+  methods: {
+    async getData() {
+      try {
+        const response = await this.$http.get("https://api.opendota.com/api/heroes");
+        // JSON responses are automatically parsed.
+        const tempHeroList = [];
+
+        this.heroList = response.data;
+
+        this.heroList.forEach((element) => {
+          tempHeroList.push({ id: element.id, name: element.localized_name });
+        });
+
+        this.heroList = tempHeroList;
+        console.log(this.heroList);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  mounted() {
+    this.getData();
+  },
+  components: { Card },
+
+  //URL: https://api.opendota.com/api/heroes
+  //https://www.section.io/engineering-education/how-to-interact-with-an-api-from-a-vuejs-application/
+};
 </script>
+
+// --------------------------------------
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap");
@@ -32,9 +86,7 @@ export default {};
   h3,
   h4,
   h5,
-  h6,
-  p,
-  div {
+  h6 {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -56,7 +108,7 @@ export default {};
       font-weight: bold;
       text-align: center;
       cursor: default;
-      z-index: 100;
+
       strong {
         color: #313131;
       }
@@ -72,12 +124,12 @@ export default {};
       border: none;
       outline: none;
       width: 25%;
-      font-size: 20px;
+      font-size: 18px;
       background: #f1f1f1;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
       border-radius: 8px;
       padding: 10px;
-
+      margin: 40px;
       transition: all 0.4s;
 
       &:focus,
@@ -86,6 +138,19 @@ export default {};
         color: #fff;
         width: 50%;
       }
+    }
+  }
+
+  main {
+    // margin: 0 auto;
+    padding: 0px 30px;
+    display: flex;
+    justify-content: center;
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 90%;
     }
   }
 }
