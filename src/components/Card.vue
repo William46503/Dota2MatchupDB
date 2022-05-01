@@ -2,13 +2,16 @@
   <div class="card">
     <a href="a" target="_blank">
       <img src="https://placehold.jp/250x250.png" alt="Hero Image" />
-      <h3>Vengeful Spirit</h3>
+      <h3>{{ hero.name }}</h3>
+      <ul>
+        <li v-for="role in hero.roles" v-bind:key="role">{{ role }}</li>
+      </ul>
     </a>
   </div>
 </template>
 
 <script>
-export default {};
+export default { props: ["hero"] };
 </script>
 
 <style lang="scss" scoped>

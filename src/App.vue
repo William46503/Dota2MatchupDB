@@ -13,12 +13,8 @@
     </header>
 
     <main>
-      <h1 v-for="item in heroList" v-bind:key="item.id">{{ item.name }}</h1>
       <div class="cards">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Card v-for="hero in heroList" v-bind:key="hero.id" :hero="hero" />
       </div>
     </main>
   </div>
@@ -30,6 +26,11 @@ import Card from "./components/Card";
 import ref from "vue";
 
 export default {
+  data() {
+    return {
+      heroList: [],
+    };
+  },
   setup() {
     const heroList = ref(null);
 
@@ -50,7 +51,11 @@ export default {
         this.heroList = response.data;
 
         this.heroList.forEach((element) => {
-          tempHeroList.push({ id: element.id, name: element.localized_name });
+          tempHeroList.push({
+            id: element.id,
+            name: element.localized_name,
+            roles: element["roles"],
+          });
         });
 
         this.heroList = tempHeroList;
@@ -63,6 +68,7 @@ export default {
   mounted() {
     this.getData();
   },
+
   components: { Card },
 
   //URL: https://api.opendota.com/api/heroes
