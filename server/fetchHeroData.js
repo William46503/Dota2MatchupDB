@@ -15,7 +15,8 @@ const updatedHeroList = [];
 axios
   .get("https://api.opendota.com/api/heroes")
   .then(async function (response) {
-    const fetchedHeroList = response.data; //Fetch newest data to update the herolist
+    const fetchedHeroList = response.data;
+    //Fetch newest data to update the herolist
     fetchedHeroList.forEach((item) => {
       updatedHeroList.push({
         id: item.id,
@@ -24,16 +25,16 @@ axios
       });
     });
   })
-  .catch(function (err) {
-    console.log(err);
+  .catch((error) => {
+    console.log(error.response);
   })
   .then(async function () {
     //After succesfully fetching and proganized the listed of newest hero list, save to mongoose cloud DB
     updatedHeroList.forEach(async (item) => {
       console.log(item);
       const newHero = new HeroModel(item);
-      await newHero.save();
+      newHero.save();
     });
 
-    console.log("Successfully fetched data from OpenDota");
+    console.log("Successfully fetched Hero data from OpenDota");
   });
