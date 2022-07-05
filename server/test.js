@@ -7,9 +7,12 @@ mongoose.connect(
   "mongodb+srv://nextlevelpenguin:MongoLlw46503@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority"
 );
 
-let heroName = "Axe";
+function findHeroId(name) {
+  let heroName = name;
 
-HeroModel.findOne({ name: heroName }, (err, result) => {
-  console.log(result.id);
-});
+  HeroModel.findOne({ name: heroName }, (err, result) => {
+    console.log(result.id);
+  });
+}
+
 //Find id by Name
