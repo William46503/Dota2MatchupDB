@@ -1,6 +1,6 @@
 const axios = require("axios");
 const mongoose = require("mongoose");
-const HeroMatchModel = require("./models/MatchUpData");
+
 const HeroModel = require("./models/Heroes");
 
 var heroListLength;
