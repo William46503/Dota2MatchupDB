@@ -1,6 +1,6 @@
 const axios = require("axios");
 const mongoose = require("mongoose");
-
+const MatchupModel = require("./models/MatchupModel");
 const HeroModel = require("./models/Heroes");
 
 var heroListLength;
@@ -9,6 +9,14 @@ let matchupData = [];
 mongoose.connect(
   "mongodb+srv://nextlevelpenguin:MongoLlw46503@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority"
 );
+
+HeroModel.find((err, result) => {
+  if (err) {
+    console.log(err);
+  } else {
+    result.forEach((element) => {});
+  }
+});
 
 // function getHeroList() {
 //   HeroModel.find((err, result) => {
