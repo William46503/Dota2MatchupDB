@@ -22,7 +22,7 @@ const MatchupSchema = new mongoose.Schema({
   },
   matchupData: {
     type: [matchplayedSchema],
-    ref: "matchplayedData",
+    ref: "matchupData",
   },
 });
 
@@ -42,7 +42,7 @@ const MatchupModel = mongoose.model(
   "matchupData"
 );
 
-// module.exports = MatchupModel;
+module.exports = MatchupModel;
 
 const newtestData = new MatchupModel({
   heroId: 1,
@@ -53,10 +53,10 @@ const newtestData = new MatchupModel({
   ],
 });
 
-newtestData.save((err, data) => {
-  if (err) {
-    console.log(err.message);
-  } else {
-    console.log(data);
-  }
-});
+// newtestData.save((err, data) => {
+//   if (err) {
+//     console.log(err.message);
+//   } else {
+//     console.log(data);
+//   }
+// });
