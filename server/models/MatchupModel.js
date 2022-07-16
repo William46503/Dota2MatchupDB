@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 mongoose.connect(
   "mongodb+srv://nextlevelpenguin:MongoLlw46503@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority"
 );
-const matchplayedSchema = new mongoose.Schema({
+const MatchplayedSchema = new mongoose.Schema({
   opponentID: {
     type: Number,
   },
@@ -20,10 +20,7 @@ const MatchupSchema = new mongoose.Schema({
   heroId: {
     type: Number,
   },
-  matchupData: {
-    type: [matchplayedSchema],
-    ref: "matchupData",
-  },
+  matchupData: [MatchplayedSchema],
 });
 
 MatchupSchema.methods.getWinRatio = function () {
@@ -42,7 +39,12 @@ const MatchupModel = mongoose.model(
   "matchupData"
 );
 
-module.exports = MatchupModel;
+const MatchupDataModel = mongoose.model("matchPlayedData", MatchplayedSchema);
+
+module.exports = {
+  MatchupModel,
+  MatchupDataModel,
+};
 
 const newtestData = new MatchupModel({
   heroId: 1,

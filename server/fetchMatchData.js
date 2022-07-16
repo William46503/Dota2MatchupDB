@@ -1,6 +1,6 @@
 const axios = require("axios");
 const mongoose = require("mongoose");
-const MatchupModel = require("./models/MatchupModel");
+const { MatchupModel, MatchupDataModel } = require("./models/MatchupModel");
 const HeroModel = require("./models/Heroes");
 
 var heroListLength;
@@ -17,19 +17,27 @@ HeroModel.find((err, result) => {
     result.forEach((element) => {
       // console.log(element.id);
 
+      //Limit the number of APi call to not crash server
       if (element.id < 2) {
         axios
           .get(`https://api.opendota.com/api/heroes/${element.id}/matchups`)
           .then((response) => {
             console.log(response.status);
 
-            matchupDataArray = response.data.map((matchup) => {
-              matchup.hero_id;
-            });
-
+            //First: create instance based on MatchupModel
             const newMatchData = new MatchupModel({
               heroId: element.id,
-              matchupData: matchupDataArray,
+            });
+
+            //To store each matchup played data for each hero, use push to sub-schema'
+            //https://www.youtube.com/watch?v=kjKR0q8EBKE&list=LL&index=1
+            response.data.forEach((data) => {
+              newMatchData.matchupData.push({
+                opponentID: data.hero_id,
+                gamesPlayed: data.games_played,
+                wins: data.wins,
+                winRatio: Math.round((data.wins / data.games_played) * 100),
+              });
             });
 
             newMatchData.save((err, data) => {
@@ -47,47 +55,3 @@ HeroModel.find((err, result) => {
     });
   }
 });
-
-// function getHeroList() {
-//   HeroModel.find((err, result) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       return result;
-//     }
-//   });
-// }
-
-// let heroListLength = getHeroList().length;
-
-// HeroModel.find((err, result) => {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     let heroListLength = result.length;
-//     result.forEach((element) => {
-//       let newHeroContainer = new HeroMatchModel({
-//         heroId: element.id,
-//         name: element.name,
-//         heroMatchState: axios
-//           .get(`https://api.opendota.com/api/heroes/${element.id}/matchups`)
-//           .then((response) => {
-//             matchupData = response.data;
-//           })
-//           .catch((error) => {
-//             console.log(error.response);
-//           })
-//           .then(() => {
-//             let newMatchData = new HeroMatchModel({
-//               opponentId: matchupData.hero_id,
-//               gamesPlayed: matchupData.games_played,
-//               wins: matchupData.wins,
-//               // winRatio: matchUpData.wins / matchUpData.games_played,
-//             });
-//           }),
-//       });
-
-//       newHeroContainer.save();
-//     });
-//   }
-// });
