@@ -1,11 +1,12 @@
 const axios = require("axios");
+require("dotenv").config();
 const mongoose = require("mongoose");
 const HeroModel = require("./models/Heroes");
 
 //To RUN: Right-click, run code.
 
 mongoose.connect(
-  "mongodb+srv://nextlevelpenguin:MongoLlw46503@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority"
+  "mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority"
 );
 
 //... <clustername>.khg9ypc.mongodb.net/<desired database/project name>?retryWrites=true&w=majority"

@@ -1,5 +1,6 @@
 const axios = require("axios");
 const mongoose = require("mongoose");
+require("dotenv").config();
 const { MatchupModel, MatchupDataModel } = require("./models/MatchupModel");
 const HeroModel = require("./models/Heroes");
 
@@ -7,9 +8,8 @@ var heroListLength;
 var matchupDataArray = [];
 
 mongoose.connect(
-  "mongodb+srv://nextlevelpenguin:MongoLlw46503@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority"
+  "mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority"
 );
-
 HeroModel.find((err, result) => {
   if (err) {
     console.log(err);
@@ -25,40 +25,40 @@ HeroModel.find((err, result) => {
         } else {
           console.log("Create new record by heroid: " + element.id);
           //Limit the number of APi call to not crash server
-          if (element.id < 5) {
-            axios
-              .get(`https://api.opendota.com/api/heroes/${element.id}/matchups`)
-              .then((response) => {
-                console.log(response.status);
+          // if (element.id < 5) {
+          axios
+            .get(`https://api.opendota.com/api/heroes/${element.id}/matchups`)
+            .then((response) => {
+              console.log(response.status);
 
-                //First: create instance based on MatchupModel
-                const newMatchData = new MatchupModel({
-                  heroId: element.id,
-                });
-
-                //To store each matchup played data for each hero, use push to sub-schema'
-                //https://www.youtube.com/watch?v=kjKR0q8EBKE&list=LL&index=1
-                response.data.forEach((data) => {
-                  newMatchData.matchupData.push({
-                    opponentID: data.hero_id,
-                    gamesPlayed: data.games_played,
-                    wins: data.wins,
-                    winRatio: Math.round((data.wins / data.games_played) * 100),
-                  });
-                });
-
-                newMatchData.save((err, data) => {
-                  if (err) {
-                    console.log(err.message);
-                  } else {
-                    console.log(data);
-                  }
-                });
-              })
-              .catch((error) => {
-                console.log(error.message);
+              //First: create instance based on MatchupModel
+              const newMatchData = new MatchupModel({
+                heroId: element.id,
               });
-          }
+
+              //To store each matchup played data for each hero, use push to sub-schema'
+              //https://www.youtube.com/watch?v=kjKR0q8EBKE&list=LL&index=1
+              response.data.forEach((data) => {
+                newMatchData.matchupData.push({
+                  opponentID: data.hero_id,
+                  gamesPlayed: data.games_played,
+                  wins: data.wins,
+                  winRatio: Math.round((data.wins / data.games_played) * 100),
+                });
+              });
+
+              newMatchData.save((err, data) => {
+                if (err) {
+                  console.log(err.message);
+                } else {
+                  console.log(data);
+                }
+              });
+            })
+            .catch((error) => {
+              console.log(error.message);
+            });
+          // }
         }
       });
     });
