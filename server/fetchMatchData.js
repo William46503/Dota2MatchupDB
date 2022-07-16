@@ -19,13 +19,13 @@ HeroModel.find((err, result) => {
       MatchupModel.find({ heroId: element.id }, (err, result) => {
         if (err) {
           console.log(err);
-        } else if (result) {
+        } else if (result.length !== 0) {
           //Check if the record is already created to avoid duplication
           console.log("record already exist");
         } else {
           console.log("Create new record by heroid: " + element.id);
           //Limit the number of APi call to not crash server
-          if (element.id < 2) {
+          if (element.id < 5) {
             axios
               .get(`https://api.opendota.com/api/heroes/${element.id}/matchups`)
               .then((response) => {
