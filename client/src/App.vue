@@ -23,6 +23,7 @@
 // --------------------------------------
 <script>
 import HeroCard from "./components/HeroCard";
+import axios from "axios";
 // import ref from "vue";
 
 export default {
@@ -40,19 +41,22 @@ export default {
   methods: {
     async getData() {
       try {
-        // const response = await this.$http.get("https://api.opendota.com/api/heroes");
-        // // JSON responses are automatically parsed.
+        // JSON responses are automatically parsed.
         // const tempHeroList = [];
-        // this.heroList = response.data;
-        // this.heroList.forEach((element) => {
-        //   tempHeroList.push({
-        //     id: element.id,
-        //     name: element.localized_name,
-        //     roles: element["roles"],
-        //   });
-        // });
-        // this.heroList = tempHeroList;
-        // console.log(this.heroList);
+        const url = "http://localhost:5000/hero-index";
+        axios
+          .get(url)
+          .then((response) => {
+            if (response.status === 200) {
+              console.log(`response status is: ${response.status}`);
+            }
+            this.heroList = response.data;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        console.log(`"hero data:" ${this.heroList}`);
       } catch (error) {
         console.log(error);
       }

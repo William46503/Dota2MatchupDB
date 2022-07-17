@@ -1,6 +1,10 @@
 <template>
   <div class="card">
-    <a href="a" target="_blank" class="card-container">
+    <a
+      v-bind:href="'http://localhost:5000/hero-data/search?heroId=' + hero.id"
+      target="_blank"
+      class="card-container"
+    >
       <img src="https://placehold.jp/250x250.png" alt="Hero Image" />
       <h3>{{ hero.name }}</h3>
       <ul>

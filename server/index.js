@@ -1,9 +1,10 @@
 const dotenv = require("dotenv");
 require("dotenv").config();
 dotenv.config();
-
+const cors = require("cors");
 const express = require("express");
 const app = express();
+app.use(cors());
 
 const mongoose = require("mongoose");
 const HeroModel = require("./models/Heroes");
@@ -30,12 +31,16 @@ app.get("/hero-index", (req, res) => {
 //search for matchup data of a certain hero heroId : NUMBER
 app.get("/hero-data/search", (req, res) => {
   let searchID = req.query.heroId;
-
   MatchupModel.find({ heroId: searchID }, (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      res.json(result);
+      //return an array of softed matchplayed data
+      res.json(
+        result[0].matchupData.sort(
+          (firstItem, secondItem) => secondItem.winRatio - firstItem.winRatio
+        )
+      );
     }
   });
 });
