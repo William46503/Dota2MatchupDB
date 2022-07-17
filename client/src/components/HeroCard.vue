@@ -11,7 +11,9 @@
 </template>
 
 <script>
-export default { props: ["hero"] };
+export default {
+  props: ["hero"],
+};
 </script>
 
 <style lang="scss" scoped>

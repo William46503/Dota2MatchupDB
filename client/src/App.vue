@@ -14,7 +14,7 @@
 
     <main>
       <div class="cards">
-        <Card v-for="hero in heroList" v-bind:key="hero.id" :hero="hero" />
+        <hero-card v-for="hero in heroList" v-bind:key="hero.id" :hero="hero" />
       </div>
     </main>
   </div>
@@ -22,44 +22,37 @@
 
 // --------------------------------------
 <script>
-import Card from "./components/Card";
-import ref from "vue";
+import HeroCard from "./components/HeroCard";
+// import ref from "vue";
 
 export default {
+  components: { HeroCard },
   data() {
     return {
       heroList: [],
     };
   },
   setup() {
-    const heroList = ref(null);
+    // const error = ref(null);
 
-    const error = ref(null);
-
-    return {
-      heroList,
-      error,
-    };
+    return {};
   },
   methods: {
     async getData() {
       try {
-        const response = await this.$http.get("https://api.opendota.com/api/heroes");
-        // JSON responses are automatically parsed.
-        const tempHeroList = [];
-
-        this.heroList = response.data;
-
-        this.heroList.forEach((element) => {
-          tempHeroList.push({
-            id: element.id,
-            name: element.localized_name,
-            roles: element["roles"],
-          });
-        });
-
-        this.heroList = tempHeroList;
-        console.log(this.heroList);
+        // const response = await this.$http.get("https://api.opendota.com/api/heroes");
+        // // JSON responses are automatically parsed.
+        // const tempHeroList = [];
+        // this.heroList = response.data;
+        // this.heroList.forEach((element) => {
+        //   tempHeroList.push({
+        //     id: element.id,
+        //     name: element.localized_name,
+        //     roles: element["roles"],
+        //   });
+        // });
+        // this.heroList = tempHeroList;
+        // console.log(this.heroList);
       } catch (error) {
         console.log(error);
       }
@@ -68,8 +61,6 @@ export default {
   mounted() {
     this.getData();
   },
-
-  components: { Card },
 
   //URL: https://api.opendota.com/api/heroes
   //https://www.section.io/engineering-education/how-to-interact-with-an-api-from-a-vuejs-application/

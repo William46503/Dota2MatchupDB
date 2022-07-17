@@ -1,11 +1,13 @@
-import Vue from 'vue';
-import App from './App.vue';
-import './registerServiceWorker';
-import axios from 'axios';
-Vue.prototype.$http = axios;
+import * as Vue from "vue";
+// import { createApp } from "vue";
+import App from "./App.vue";
+import "./registerServiceWorker";
 
-Vue.config.productionTip = false
+// new Vue({
+//   render: (h) => h(App),
+// }).$mount("#app");
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+// import the root component App from a single-file component.;
+
+const app = Vue.createApp(App);
+app.mount("#app");
