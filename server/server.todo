@@ -11,7 +11,7 @@
               "content": "bad match up -> counter by item",
               "id": 1658062792003,
               "level": "default",
-              "done": false
+              "done": true
             }
           },
           {
@@ -21,7 +21,7 @@
               "content": "goodmatchup -> good to team with",
               "id": 1658062767171,
               "level": "default",
-              "done": false
+              "done": true
             }
           }
         ],
@@ -29,7 +29,7 @@
           "content": "change heromodel",
           "id": 1658062744157,
           "level": "default",
-          "done": false
+          "done": true
         }
       }
     ],
@@ -41,6 +41,6 @@
     "add_mode": "bottom",
     "virtual": false,
     "showLine": false,
-    "playFontSize": 0
+    "playFontSize": 24
   }
 }

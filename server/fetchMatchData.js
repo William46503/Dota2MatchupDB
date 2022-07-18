@@ -1,15 +1,18 @@
 const axios = require("axios");
 const mongoose = require("mongoose");
-require("dotenv").config();
+require("dotenv").config({ path: "server/.env" });
 const { MatchupModel, MatchupDataModel } = require("./models/MatchupModel");
 const HeroModel = require("./models/Heroes");
 
 var heroListLength;
 var matchupDataArray = [];
 
-mongoose.connect(
-  "mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASS}@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority"
-);
+const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority`;
+mongoose
+  .connect(url)
+  .then(() => console.log("connected"))
+  .catch((e) => console.log(e));
+
 HeroModel.find((err, result) => {
   if (err) {
     console.log(err);

@@ -33,11 +33,13 @@
         }
       }
     ],
-    "expandKeys": [],
+    "expandKeys": [
+      1658062816981
+    ],
     "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
     "add_mode": "bottom",
     "virtual": false,
     "showLine": false,
-    "playFontSize": 0
+    "playFontSize": 24
   }
 }

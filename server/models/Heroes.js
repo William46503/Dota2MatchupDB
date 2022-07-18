@@ -9,15 +9,19 @@ const HeroesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  imageName: {
+    type: String,
+    required: true,
+  },
   roles: {
     type: [String],
     required: true,
   },
-  goodMatchUp: {
+  goodWith: {
     type: [String],
     required: false,
   },
-  badMatchUp: {
+  counteredByItems: {
     type: [String],
     required: false,
   },
