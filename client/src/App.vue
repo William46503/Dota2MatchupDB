@@ -39,18 +39,22 @@ export default {
     return {};
   },
   methods: {
-    async getData() {
+    async getHeroData() {
       try {
         // JSON responses are automatically parsed.
-        // const tempHeroList = [];
+
         const url = "http://localhost:5000/hero-index";
-        axios
+        await axios
           .get(url)
           .then((response) => {
             if (response.status === 200) {
               console.log(`response status is: ${response.status}`);
             }
-            this.heroList = response.data;
+
+            var unsortedList = response.data;
+            this.heroList = unsortedList.sort(function (a, b) {
+              return a.name.localeCompare(b.name);
+            });
           })
           .catch((error) => {
             console.log(error);
@@ -63,7 +67,7 @@ export default {
     },
   },
   mounted() {
-    this.getData();
+    this.getHeroData();
   },
 
   //URL: https://api.opendota.com/api/heroes

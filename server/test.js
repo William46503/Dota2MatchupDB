@@ -3,16 +3,13 @@ const HeroModel = require("./models/Heroes");
 
 //To RUN: Right-click, run code.
 
-mongoose.connect(
-  "mongodb+srv://nextlevelpenguin:MongoLlw46503@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority"
-);
-
-function findHeroId(name) {
-  let heroName = name;
-
-  HeroModel.findOne({ name: heroName }, (err, result) => {
-    console.log(result.id);
-  });
+function getImgUrl(heroName) {
+  var imageName = heroName.toLowerCase().replace(/\s/g, "");
+  var imageURL = `../assets/HeroImages/${imageName}.png`;
+  console.log(imageURL);
+  return imageURL;
 }
+
+getImgUrl("Axe");
 
 //Find id by Name
