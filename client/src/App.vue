@@ -6,7 +6,8 @@
         <input
           type="search"
           class="search-field"
-          placeholder="Search Dota2 Info"
+          v-model="searchInput"
+          placeholder="Search Dota2 Hero"
           required
         />
       </form>
@@ -14,7 +15,7 @@
 
     <main>
       <div class="cards">
-        <hero-card v-for="hero in heroList" v-bind:key="hero.id" :hero="hero" />
+        <hero-card v-for="hero in filterList" :key="hero.id" :hero="hero" />
       </div>
     </main>
   </div>
@@ -31,6 +32,7 @@ export default {
   data() {
     return {
       heroList: [],
+      searchInput: "",
     };
   },
   setup() {
@@ -68,6 +70,13 @@ export default {
   },
   mounted() {
     this.getHeroData();
+  },
+  computed: {
+    filterList() {
+      return this.heroList.filter((hero) => {
+        return hero.name.toLowerCase().includes(this.searchInput.toLowerCase());
+      });
+    },
   },
 
   //URL: https://api.opendota.com/api/heroes

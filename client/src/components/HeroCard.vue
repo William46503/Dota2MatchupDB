@@ -18,9 +18,7 @@
 export default {
   props: ["hero"],
   data() {
-    return {
-      imageHeroName: "axe",
-    };
+    return {};
   },
   methods: {
     getImgUrl(heroName) {
