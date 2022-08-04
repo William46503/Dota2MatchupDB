@@ -1,16 +1,16 @@
 <template>
   <div class="card">
-    <a
-      v-bind:href="'http://localhost:5000/hero-data/search?heroId=' + hero.id"
-      target="_blank"
+    <router-link
+      :to="{ name: 'heroPage', params: { heroName: hero.name } }"
       class="card-container"
+      target="_blank"
     >
       <img v-bind:src="getImgUrl(hero.name)" alt="Hero Image" />
       <h3>{{ hero.name }}</h3>
       <ul>
         <li v-for="role in hero.roles" v-bind:key="role">{{ role }}</li>
       </ul>
-    </a>
+    </router-link>
   </div>
 </template>
 
