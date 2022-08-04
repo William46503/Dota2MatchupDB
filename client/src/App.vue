@@ -31,7 +31,28 @@ export default {
   components: { HeroCard },
   data() {
     return {
-      heroList: [],
+      heroList: [
+        {
+          _id: { $oid: "62d5248934e1eb80945c2cac" },
+          id: 1,
+          name: "Anti-Mage",
+          imageName: "anti-mage",
+          roles: ["Carry", "Escape", "Nuker"],
+          goodWith: [],
+          counteredByItems: [],
+          __v: 0,
+        },
+        {
+          _id: { $oid: "62d5248934e1eb80945c2cad" },
+          id: 2,
+          name: "Axe",
+          imageName: "axe",
+          roles: ["Initiator", "Durable", "Disabler", "Jungler", "Carry"],
+          goodWith: [],
+          counteredByItems: [],
+          __v: 0,
+        },
+      ],
       searchInput: "",
     };
   },
