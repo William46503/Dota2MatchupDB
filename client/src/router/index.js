@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-  { path: "/", name: "home", component: () => import("../App.vue") },
+  { path: "/", name: "home", component: () => import("../views/HomePage.vue") },
   {
     path: "/:heroName/matchData",
     name: "heroPage",
