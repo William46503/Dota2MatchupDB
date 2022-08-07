@@ -1,7 +1,11 @@
 <template>
   <div class="card">
     <router-link
-      :to="{ name: 'heroPage', params: { heroName: hero.name } }"
+      :to="{
+        name: 'heroPage',
+        params: { heroName: hero.name },
+        query: { hero_id: hero.id },
+      }"
       class="card-container"
       target="_blank"
     >
