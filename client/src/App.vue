@@ -17,9 +17,10 @@ body {
 }
 
 #app {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+
   font-family: "Rubik", sans-serif;
   body,
   ul,
