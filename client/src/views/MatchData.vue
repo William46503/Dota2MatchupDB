@@ -5,10 +5,9 @@
       <!-- <h3>This is body of Hero ID:{{ this.heroId }}</h3> -->
       <section class="hero--container__generalInfo">
         <h5 class="hero--container__generalInfo--title">Roles:</h5>
+
         <ul>
-          <li>Carry</li>
-          <li>Nuke</li>
-          <li>Asssasin</li>
+          <li v-for="role in heroRoles" v-bind:key="role">{{ role }}</li>
         </ul>
       </section>
     </section>
@@ -17,52 +16,18 @@
         <section class="hero--container__matchup-good">
           <h5 class="hero--container__columnTitle">Good Win Rate Against</h5>
           <div class="hero-container__matchup--container">
-            <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="good matchup image" />
-              <ul>
-                <li>Gameplayed: 1000</li>
-                <li>Wins: 500</li>
-                <li>Win Rate: 50%</li>
-              </ul>
-            </div>
-            <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="good matchup image" />
-              <ul>
-                <li>Gameplayed</li>
-                <li>Wins</li>
-                <li>Win Rate</li>
-              </ul>
-            </div>
-            <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="good matchup image" />
-              <ul>
-                <li>Gameplayed</li>
-                <li>Wins</li>
-                <li>Win Rate</li>
-              </ul>
-            </div>
-            <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="good matchup image" />
-              <ul>
-                <li>Gameplayed</li>
-                <li>Wins</li>
-                <li>Win Rate</li>
-              </ul>
-            </div>
-            <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="good matchup image" />
-              <ul>
-                <li>Gameplayed</li>
-                <li>Wins</li>
-                <li>Win Rate</li>
-              </ul>
-            </div>
+            <matchup-card
+              v-for="matchData in this.goodMatchupData"
+              v-bind:key="matchData._id"
+              :matchupData="matchData"
+              :matchupType="good"
+            />
           </div>
         </section>
         <section class="hero--container__matchup-bad">
           <h5 class="hero--container__columnTitle">Bad Win Rate Against</h5>
           <div class="hero-container__matchup--container">
-            <div class="hero-container__matchup__detail">
+            <!-- <div class="hero-container__matchup__detail">
               <img src="https://placehold.jp/150x100.png" alt="bad matchup image" />
               <ul>
                 <li>Gameplayed</li>
@@ -101,7 +66,7 @@
                 <li>Wins</li>
                 <li>Win Rate</li>
               </ul>
-            </div>
+            </div> -->
           </div>
         </section>
       </article>
@@ -110,35 +75,59 @@
 </template>
 
 <script>
+import MatchupCard from "../components/MatchupDataCard.vue";
 import axios from "axios";
+import { ref } from "vue";
 
 export default {
+  components: { MatchupCard },
   data() {
     return {
       heroId: this.$route.query.hero_id,
       heroName: this.$route.params.heroName,
-      gameplayedData: [],
+      heroRoles: this.$route.query.hero_roles,
+      matchupData: ref([]),
+      goodMatchupData: ref([]),
+      badMatchupData: ref([]),
     };
   },
   methods: {
-    async getHeroMatchData(heroId) {
+    async getHeroMatchData(Id) {
       try {
-        const url = `"http://localhost:5000/"${heroId}`;
-        await axios.get(url);
+        const url = "http://localhost:5000/hero-data/search";
+        await axios
+          .get(url, { params: { heroId: Id } })
+          .then((response) => {
+            if (response.status === 200) {
+              console.log(`response status is: ${response.status}`);
+            }
+
+            this.matchupData = JSON.parse(JSON.stringify(response.data));
+          })
+          .then(() => {
+            this.goodMatchupData = this.matchupData.slice(0, 5);
+            this.badMatchupData = this.matchupData
+              .slice(this.matchupData.length - 5, this.matchupData.length)
+              .reverse();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } catch (error) {
         console.log(error);
       }
     },
   },
-  created() {},
+  created() {
+    this.getHeroMatchData(this.heroId);
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .wrapper {
-  background: rgba(55, 54, 96, 1);
+  background: whitesmoke;
   min-height: 100vh; /* minus the height of the footer */
-  color: whitesmoke;
   font-family: "Rubik", sans-serif;
 
   body,
@@ -191,13 +180,13 @@ export default {
     display: flex;
     width: 60%;
     margin: 0px auto;
-    background: rgba(55, 54, 96, 1);
+
     // box-shadow: 2px 2px 5px rgba(49, 48, 80, 1);
-    border: 3px solid rgba(57, 56, 100, 1);
+    border: 1px solid rgb(0, 0, 0);
     border-radius: 20px;
     padding: 10px;
     justify-content: space-evenly;
-    box-shadow: 3px 3px 10px rgb(13, 13, 19, 0.3);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
 
     h5 {
       font-size: 18px;
@@ -207,33 +196,6 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      .hero-container__matchup__detail {
-        padding-top: 10px;
-        position: relative;
-
-        img {
-          transition: all 0.5s ease-out;
-        }
-        ul {
-          position: absolute;
-          top: 45px;
-          left: 15px;
-          font-size: 14px;
-          transition: all 0.5s ease-out;
-          opacity: 0;
-        }
-
-        &:hover {
-          img {
-            transform: translateX(-20px);
-          }
-          ul {
-            transform: translateX(130px);
-            opacity: 1;
-          }
-        }
-      }
     }
   }
 }

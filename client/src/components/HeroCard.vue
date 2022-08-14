@@ -4,7 +4,7 @@
       :to="{
         name: 'heroPage',
         params: { heroName: hero.name },
-        query: { hero_id: hero.id },
+        query: { hero_id: hero.id, hero_roles: hero.roles },
       }"
       class="card-container"
       target="_blank"
