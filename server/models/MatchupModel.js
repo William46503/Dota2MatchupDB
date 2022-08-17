@@ -46,14 +46,14 @@ module.exports = {
   MatchupDataModel,
 };
 
-const newtestData = new MatchupModel({
-  heroId: 1,
+// const newtestData = new MatchupModel({
+//   heroId: 1,
 
-  matchupData: [
-    { opponentID: 2, gamesPlayed: 100, wins: 29 },
-    { opponentID: 5, gamesPlayed: 400, wins: 124 },
-  ],
-});
+//   matchupData: [
+//     { opponentID: 2, gamesPlayed: 100, wins: 29 },
+//     { opponentID: 5, gamesPlayed: 400, wins: 124 },
+//   ],
+// });
 
 // newtestData.save((err, data) => {
 //   if (err) {

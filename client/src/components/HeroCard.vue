@@ -29,7 +29,7 @@ export default {
       //convert hero.name to lowercase to match name of the respective png
       var imageName = heroName.toLowerCase().replace(/[\s-]/g, "");
       var imageURL = `/img/HeroImages/${imageName}.png`;
-      console.log(imageURL);
+      // console.log(imageURL);
       return imageURL;
     },
   },

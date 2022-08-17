@@ -19,54 +19,20 @@
             <matchup-card
               v-for="matchData in this.goodMatchupData"
               v-bind:key="matchData._id"
-              :matchupData="matchData"
-              :matchupType="good"
+              :matchupDataObject="matchData"
+              :matchupType="'good'"
             />
           </div>
         </section>
         <section class="hero--container__matchup-bad">
           <h5 class="hero--container__columnTitle">Bad Win Rate Against</h5>
           <div class="hero-container__matchup--container">
-            <!-- <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="bad matchup image" />
-              <ul>
-                <li>Gameplayed</li>
-                <li>Wins</li>
-                <li>Win Rate</li>
-              </ul>
-            </div>
-            <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="bad matchup image" />
-              <ul>
-                <li>Gameplayed</li>
-                <li>Wins</li>
-                <li>Win Rate</li>
-              </ul>
-            </div>
-            <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="bad matchup image" />
-              <ul>
-                <li>Gameplayed</li>
-                <li>Wins</li>
-                <li>Win Rate</li>
-              </ul>
-            </div>
-            <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="bad matchup image" />
-              <ul>
-                <li>Gameplayed</li>
-                <li>Wins</li>
-                <li>Win Rate</li>
-              </ul>
-            </div>
-            <div class="hero-container__matchup__detail">
-              <img src="https://placehold.jp/150x100.png" alt="bad matchup image" />
-              <ul>
-                <li>Gameplayed</li>
-                <li>Wins</li>
-                <li>Win Rate</li>
-              </ul>
-            </div> -->
+            <matchup-card
+              v-for="matchData in this.badMatchupData"
+              v-bind:key="matchData._id"
+              :matchupDataObject="matchData"
+              :matchupType="'bad'"
+            />
           </div>
         </section>
       </article>
@@ -101,13 +67,12 @@ export default {
             if (response.status === 200) {
               console.log(`response status is: ${response.status}`);
             }
-
             this.matchupData = JSON.parse(JSON.stringify(response.data));
           })
           .then(() => {
-            this.goodMatchupData = this.matchupData.slice(0, 5);
+            this.goodMatchupData = this.matchupData.slice(0, 7);
             this.badMatchupData = this.matchupData
-              .slice(this.matchupData.length - 5, this.matchupData.length)
+              .slice(this.matchupData.length - 7, this.matchupData.length)
               .reverse();
           })
           .catch((error) => {
@@ -116,6 +81,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    parseData(inputData) {
+      return JSON.parse(JSON.stringify(inputData));
     },
   },
   created() {
