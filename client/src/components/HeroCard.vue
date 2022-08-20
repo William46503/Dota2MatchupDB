@@ -40,7 +40,7 @@ export default {
 .card {
   // max-width: 40%;
   width: 120px;
-  margin: 10px;
+  margin: 10px 5px;
   transition: all 0.5s;
 
   .card-container {
@@ -55,7 +55,7 @@ export default {
       border-radius: 16px;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 
-      transition: all 0.5s;
+      transition: all 0.3s ease-out;
     }
 
     h3 {
@@ -74,11 +74,11 @@ export default {
       color: #fff;
       opacity: 0;
       font-size: 14px;
-      transition: all 0.5s;
+      transition: all 0.2s ease-out;
     }
   }
   &:hover {
-    width: 200px;
+    width: 180px;
 
     img {
       transform: scale(1.1);

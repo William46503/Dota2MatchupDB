@@ -114,7 +114,7 @@ export default {
   }
 
   header {
-    padding: 50px 0px;
+    padding: 50px 10px 0px 0px;
     h1 {
       font-size: 42px;
       color: rgb(117, 0, 0);
@@ -157,14 +157,16 @@ export default {
 
   main {
     // margin: 0 auto;
-    padding: 0px 30px;
+    margin: 0px 50px;
     display: flex;
     justify-content: center;
 
     .cards {
       display: flex;
+
       flex-wrap: wrap;
-      justify-content: center;
+      justify-content: space-between;
+      max-width: 80%;
     }
   }
 }
