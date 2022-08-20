@@ -9,11 +9,10 @@ const HeroModel = require("./models/Heroes");
 const { MatchupModel, MatchupDataModel } = require("./models/MatchupModel");
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.khg9ypc.mongodb.net/Dota2App?retryWrites=true&w=majority`;
-mongoose
-  .connect(uri, {
-    serverSelectionTimeoutMS: 5000,
-  })
-  .catch((err) => console.log(err.reason));
+
+// const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ac-6mwyu9g-shard-00-00.khg9ypc.mongodb.net:27017,ac-6mwyu9g-shard-00-01.khg9ypc.mongodb.net:27017,ac-6mwyu9g-shard-00-02.khg9ypc.mongodb.net:27017/?ssl=true&replicaSet=atlas-najo4g-shard-0&authSource=admin&retryWrites=true&w=majority`;
+
+mongoose.connect(uri).catch((err) => console.log(err.reason));
 
 //Get all hero index
 app.get("/hero-index", (req, res) => {

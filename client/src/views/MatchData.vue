@@ -21,6 +21,7 @@
               v-bind:key="matchData._id"
               :matchupDataObject="matchData"
               :matchupType="'good'"
+              :matchupOpponentName="getOpponentName(matchData.opponentID)"
             />
           </div>
         </section>
@@ -32,6 +33,7 @@
               v-bind:key="matchData._id"
               :matchupDataObject="matchData"
               :matchupType="'bad'"
+              :matchupOpponentName="getOpponentName(matchData.opponentID)"
             />
           </div>
         </section>
@@ -55,6 +57,7 @@ export default {
       matchupData: ref([]),
       goodMatchupData: ref([]),
       badMatchupData: ref([]),
+      heroList: [],
     };
   },
   methods: {
@@ -64,9 +67,6 @@ export default {
         await axios
           .get(url, { params: { heroId: Id } })
           .then((response) => {
-            if (response.status === 200) {
-              console.log(`response status is: ${response.status}`);
-            }
             this.matchupData = JSON.parse(JSON.stringify(response.data));
           })
           .then(() => {
@@ -82,12 +82,26 @@ export default {
         console.log(error);
       }
     },
-    parseData(inputData) {
-      return JSON.parse(JSON.stringify(inputData));
+    async getHeroList() {
+      // JSON responses are automatically parsed.
+
+      const url = "http://localhost:5000/hero-index";
+      await axios
+        .get(url)
+        .then((response) => {
+          this.heroList = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getOpponentName(searchID) {
+      return this.heroList.find((item) => item.id === searchID).name;
     },
   },
-  created() {
-    this.getHeroMatchData(this.heroId);
+
+  mounted() {
+    this.getHeroList(), this.getHeroMatchData(this.heroId);
   },
 };
 </script>
@@ -146,7 +160,7 @@ export default {
 
   .hero--container {
     display: flex;
-    width: 60%;
+    width: 80%;
     margin: 0px auto;
 
     // box-shadow: 2px 2px 5px rgba(49, 48, 80, 1);

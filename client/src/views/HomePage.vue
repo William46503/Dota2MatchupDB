@@ -160,11 +160,11 @@ export default {
     padding: 0px 30px;
     display: flex;
     justify-content: center;
+
     .cards {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      max-width: 90%;
     }
   }
 }

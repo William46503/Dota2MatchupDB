@@ -1,10 +1,12 @@
 <template>
   <div class="hero-container__matchup__detail">
-    <img src="https://placehold.jp/150x100.png" :alt="matchupType + ' matchup image'" />
-    <!-- NEED TO FIX THESE -->
+    <img
+      :src="getHeroImage(this.matchupOpponentName)"
+      :alt="this.matchupType + ' matchup image'"
+    />
 
     <ul>
-      <li>OpponentID : {{ this.matchupDataObject.opponentID }}</li>
+      <li>Hero: {{ this.matchupOpponentName }}</li>
       <li>Gameplayed: {{ this.matchupDataObject.gamesPlayed }}</li>
       <li>Wins: {{ this.matchupDataObject.wins }}</li>
       <li>Win Rate: {{ this.matchupDataObject.winRatio }}%</li>
@@ -13,11 +15,11 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
       heroList: [],
+      opponentName: "Default",
     };
   },
   props: {
@@ -29,41 +31,24 @@ export default {
       type: Object,
       required: true,
     },
+    matchupOpponentName: {
+      type: String,
+      required: true,
+    },
   },
   methods: {
-    logStuff() {
-      console.log();
-    },
-    async getHeroData() {
-      try {
-        // JSON responses are automatically parsed.
+    logStuff() {},
 
-        const url = "http://localhost:5000/hero-index";
-        await axios
-          .get(url)
-          .then((response) => {
-            if (response.status === 200) {
-              console.log(`response status is: ${response.status}`);
-            }
+    getHeroImage(heroName) {
+      //convert hero.name to lowercase to match name of the respective png
+      var imageName = heroName.toLowerCase().replace(/[\s-]/g, "");
+      var imageURL = `/img/HeroImages/${imageName}.png`;
 
-            var unsortedList = response.data;
-            this.heroList = unsortedList.sort(function (a, b) {
-              return a.name.localeCompare(b.name);
-            });
-            console.log(this.heroList);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-
-        // console.log(`"hero data:" ${this.heroList}`);
-      } catch (error) {
-        console.log(error);
-      }
+      return imageURL;
     },
   },
-  mounted() {
-    this.logStuff(), this.getHeroData();
+  created() {
+    this.logStuff();
   },
 };
 </script>
@@ -74,23 +59,29 @@ export default {
   position: relative;
 
   img {
+    width: 80%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
     transition: all 0.5s ease-out;
   }
   ul {
     position: absolute;
-    top: 45px;
+    top: 25%;
     left: 15px;
     font-size: 14px;
-    transition: all 0.5s ease-out;
+    transition: all 0.6s ease-out;
     opacity: 0;
+    cursor: default;
   }
 
   &:hover {
     img {
-      transform: translateX(-20px);
+      transform: scale(0.9) translateX(-20px);
     }
     ul {
-      transform: translateX(120px);
+      transform: translateX(180px);
       opacity: 1;
     }
   }
