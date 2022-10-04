@@ -35,11 +35,6 @@ export default {
       searchInput: "",
     };
   },
-  setup() {
-    // const error = ref(null);
-
-    return {};
-  },
   methods: {
     async getHeroData() {
       try {

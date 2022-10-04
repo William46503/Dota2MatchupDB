@@ -70,9 +70,20 @@ export default {
             this.matchupData = JSON.parse(JSON.stringify(response.data));
           })
           .then(() => {
-            this.goodMatchupData = this.matchupData.slice(0, 7);
-            this.badMatchupData = this.matchupData
-              .slice(this.matchupData.length - 7, this.matchupData.length)
+            this.matchupData.forEach((item) => {
+              if (item.gamesPlayed > 20) {
+                this.goodMatchupData.push(item);
+              }
+            });
+            this.goodMatchupData = this.goodMatchupData.slice(0, 7);
+
+            this.matchupData.forEach((item) => {
+              if (item.gamesPlayed > 20) {
+                this.badMatchupData.push(item);
+              }
+            });
+            this.badMatchupData = this.badMatchupData
+              .slice(this.badMatchupData.length - 7, this.badMatchupData.length)
               .reverse();
           })
           .catch((error) => {
@@ -99,7 +110,6 @@ export default {
       return this.heroList.find((item) => item.id === searchID).name;
     },
   },
-
   mounted() {
     this.getHeroList(), this.getHeroMatchData(this.heroId);
   },
