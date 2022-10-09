@@ -21,6 +21,26 @@
               "content": "display top 5 hero matchup based on api-matchplayed data winratio",
               "id": 1658062826814,
               "level": "default",
+              "done": true
+            }
+          },
+          {
+            "key": 1664891784127,
+            "children": [],
+            "todo": {
+              "content": "Make hero cards in matchup view clickable to quickly go to that hero-matchupview",
+              "id": 1664891784127,
+              "level": "default",
+              "done": false
+            }
+          },
+          {
+            "key": 1664891823128,
+            "children": [],
+            "todo": {
+              "content": "Add styles to match upview and refactor codes",
+              "id": 1664891823128,
+              "level": "default",
               "done": false
             }
           }
@@ -34,7 +54,8 @@
       }
     ],
     "expandKeys": [
-      1658062816981
+      1658062816981,
+      1664891784127
     ],
     "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
     "add_mode": "bottom",
